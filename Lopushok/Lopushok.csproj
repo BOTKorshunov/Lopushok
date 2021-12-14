@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\Лопушок.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -64,6 +67,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Switcher.cs" />
+    <Compile Include="DB\Model\ProductType.cs" />
+    <Compile Include="Pages\Products\ProductAddPage.xaml.cs">
+      <DependentUpon>ProductAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ChangeCostWindow.xaml.cs">
+      <DependentUpon>ChangeCostWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SelectImageWindow.xaml.cs">
+      <DependentUpon>SelectImageWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -106,6 +120,7 @@
       <DependentUpon>LopushokModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Model\DbConnect.cs" />
+    <Compile Include="DB\Model\Product.cs" />
     <Compile Include="DB\Product.cs">
       <DependentUpon>LopushokModel.tt</DependentUpon>
     </Compile>
@@ -131,8 +146,27 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\Products\ProductAddPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Products\ProductPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ChangeCostWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SelectImageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\Products\ProductPage.xaml.cs">
+      <DependentUpon>ProductPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -177,6 +211,9 @@
       <DependentUpon>LopushokModel.edmx</DependentUpon>
       <LastGenOutput>LopushokModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="products\picture.png" />
+    <Resource Include="Images\Лопушок.ico" />
+    <Resource Include="Images\Лопушок.png" />
     <Resource Include="products\paper_0.jpeg" />
     <Resource Include="products\paper_1.jpeg" />
     <Resource Include="products\paper_10.jpeg" />
@@ -207,5 +244,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

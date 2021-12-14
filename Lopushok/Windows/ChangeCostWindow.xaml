@@ -1,0 +1,19 @@
+﻿<Window x:Class="Lopushok.Windows.ChangeCostWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lopushok.Windows"
+        mc:Ignorable="d"
+        Title="Добавить к стоимости агента" Height="300" Width="300"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Margin="10">
+            <TextBlock Text="Введите стоимость агента, которая будет прибавлена к существующей"
+                       TextWrapping="Wrap" TextAlignment="Center" FontSize="20"/>
+            <TextBox Margin="0, 5, 0, 5" Name="tbCost"/>
+            <Button Margin="0, 5, 0, 5" Content="Сохранить" Name="btnSave" Click="btnSave_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lopushok"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Лопушок" MinHeight="450" MinWidth="1000"
+        Style="{StaticResource windowStyle}"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Style="{StaticResource secondColor}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <Image Source="Images/Лопушок.png" Margin="10"/>
+                <TextBlock Text="Лопушок" VerticalAlignment="Center"
+                           FontSize="80" FontWeight="Bold" Margin="10, 0, 10, 0"/>
+            </StackPanel>
+
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center"
+                    Content="Назад" Width="150" Background="#00CC76" Margin="10"
+                    Name="btnBack" Click="btnBack_Click"/>
+        </Grid>
+
+        <Frame Grid.Row="1" Name="fMain" NavigationUIVisibility="Hidden"
+               ContentRendered="fMain_ContentRendered"/>
     </Grid>
 </Window>

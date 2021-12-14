@@ -4,6 +4,43 @@
              xmlns:local="clr-namespace:Lopushok"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="windowStyle" TargetType="Window">
+            <Setter Property="FontFamily" Value="Gabriola"/>
+        </Style>
+        
+        <Style x:Key="pageStyle" TargetType="Page">
+            <Setter Property="FontFamily" Value="Gabriola"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Gabriola"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="30"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Gabriola"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="ItemsControl.Background" Value="#CEFFF9"/>
+        </Style>
+        
+        <Style x:Key="mainColor">
+            <Setter Property="ItemsControl.Background" Value="#FFFFFF"/>
+        </Style>
+
+        <Style x:Key="secondColor">
+            <Setter Property="ItemsControl.Background" Value="#CEFFF9"/>
+        </Style>
+
+        <Style x:Key="accentColor">
+            <Setter Property="ItemsControl.Background" Value="#00CC76"/>
+        </Style>
     </Application.Resources>
 </Application>

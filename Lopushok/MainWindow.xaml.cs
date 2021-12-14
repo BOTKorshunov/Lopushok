@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lopushok.Pages.Products;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,17 @@ namespace Lopushok
         public MainWindow()
         {
             InitializeComponent();
+            fMain.Navigate(new ProductPage());
+        }
+
+        private void fMain_ContentRendered(object sender, EventArgs e)
+        {
+            btnBack.Visibility = fMain.CanGoBack ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            fMain.GoBack();
         }
     }
 }

@@ -1,0 +1,164 @@
+﻿<Page x:Class="Lopushok.Pages.Products.ProductAddPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Lopushok.Pages.Products"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ProductAddPage">
+
+    <Page.Resources>
+        <Style x:Key="gridMaterial" TargetType="Grid">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        
+        <Style x:Key="tblMaterial" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+
+        <Style x:Key="tbMaterial" TargetType="TextBox">
+            <Setter Property="Margin" Value="10, 0, 0, 0"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="cbMaterial" TargetType="ComboBox">
+            <Setter Property="Margin" Value="10, 0, 0, 0"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Vertical"
+                    HorizontalAlignment="Center">
+            <Image Name="imgProduct" Width="180" Height="180"
+                   Source="{Binding CorrectImage}"/>
+            <Button Margin="0, 10, 0, 10" Name="btnSelectImage"
+                    Click="btnSelectImage_Click">
+                <TextBlock Text="Изменить картинку" TextWrapping="Wrap"
+                           FontSize="20"/>
+            </Button>
+        </StackPanel>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Style="{StaticResource gridMaterial}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Название:"
+                           Style="{StaticResource tblMaterial}"/>
+                <TextBox Grid.Column="1" Style="{StaticResource tbMaterial}"
+                         Text="{Binding Title}" Name="tbTitle"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Style="{StaticResource gridMaterial}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Тип продукта:"
+                           Style="{StaticResource tblMaterial}"/>
+                <ComboBox Grid.Column="1" Style="{StaticResource cbMaterial}"
+                          Name="cbProductType" SelectedItem="{Binding ProductType}"/>
+            </Grid>
+
+            <Grid Grid.Row="2" Style="{StaticResource gridMaterial}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Артикль:"
+                           Style="{StaticResource tblMaterial}"/>
+                <TextBox Grid.Column="1" Style="{StaticResource tbMaterial}"
+                         Text="{Binding ArticleNumber}" Name="tbArticle"/>
+            </Grid>
+
+            <Grid Grid.Row="3" Style="{StaticResource gridMaterial}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Описание:"
+                           Style="{StaticResource tblMaterial}"/>
+                <TextBox Grid.Column="1" Style="{StaticResource tbMaterial}"
+                         Text="{Binding Description}" TextWrapping="Wrap"/>
+            </Grid>
+
+            <Grid Grid.Row="4" Style="{StaticResource gridMaterial}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="490"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Количество агентов:"
+                           Style="{StaticResource tblMaterial}"/>
+                <TextBox Grid.Column="1" Margin="10, 0, 0, 0"
+                         Text="{Binding ProductionPersonCount}"
+                         Name="tbCountAgents"/>
+            </Grid>
+
+            <Grid Grid.Row="5" Style="{StaticResource gridMaterial}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="№ цеха:"
+                           Style="{StaticResource tblMaterial}"/>
+                <TextBox Grid.Column="1" Margin="10, 0, 0, 0"
+                         Text="{Binding ProductionWorkshopNumber}"
+                         Name="tbWorkshopNumber"/>
+            </Grid>
+
+            <Grid Grid.Row="6" Style="{StaticResource gridMaterial}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Цена одного агента:"
+                           Style="{StaticResource tblMaterial}"/>
+                <TextBox Grid.Column="1" Margin="10, 0, 0, 0"
+                         Text="{Binding MinCostForAgent}" Name="tbMinCostForAgent"/>
+            </Grid>
+
+            <Grid Grid.Row="7" Style="{StaticResource gridMaterial}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Content="Удалить" Margin="0, 0, 5, 0"
+                        Background="#00CC76" Name="btnDelete" Click="btnDelete_Click"/>
+                <Button Grid.Column="1" Content="Добавить" Margin="5, 0, 0, 0"
+                        Name="btnAdd" Click="btnAdd_Click"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

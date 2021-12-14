@@ -13,12 +13,12 @@ namespace Lopushok.Classes
     public class Switcher
     {
         private Grid _gridSwitcher = new Grid();
-        private Product[] _products;
+        private StackPanel _spPages = new StackPanel();
+        private Dictionary<int, Product[]> _productPages = new Dictionary<int, Product[]>();
         private ListBox _lbProducts;
-        private List<TextBlock> _tblPages = new List<TextBlock>();
+
         private int _countProductsInPage = 5;
         private int _pageNumber = 0;
-        private StackPanel _spPages = new StackPanel();
 
         public Grid GridSwitcher
         {
@@ -30,24 +30,20 @@ namespace Lopushok.Classes
 
         public Switcher(Product[] products, ListBox lbProducts)
         {
-            _products = products;
             _lbProducts = lbProducts;
 
             CreateGridSwitcher();
-            CreatePages();
+            CreateProductPages(products);
 
-            ShowProducts();
             ShowPages();
         }
 
         public void CreateGridSwitcher()
         {
             _gridSwitcher.ColumnDefinitions.Add(new ColumnDefinition());
-
             ColumnDefinition column = new ColumnDefinition();
             column.Width = new System.Windows.GridLength(150);
             _gridSwitcher.ColumnDefinitions.Add(column);
-
             _gridSwitcher.ColumnDefinitions.Add(new ColumnDefinition());
 
             TextBlock tblBack = new TextBlock();
@@ -57,6 +53,12 @@ namespace Lopushok.Classes
             Grid.SetColumn(tblBack, 0);
             _gridSwitcher.Children.Add(tblBack);
 
+            _spPages.Orientation = Orientation.Horizontal;
+            _spPages.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            _spPages.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            Grid.SetColumn(_spPages, 1);
+            _gridSwitcher.Children.Add(_spPages);
+
             TextBlock tblNext = new TextBlock();
             tblNext.Text = ">";
             tblNext.FontSize = 30;
@@ -65,128 +67,90 @@ namespace Lopushok.Classes
             _gridSwitcher.Children.Add(tblNext);
         }
 
-        public void CreatePages()
+        public void CreateProductPages(Product[] products)
         {
-            _spPages.Orientation = Orientation.Horizontal;
-            _spPages.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-            _spPages.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-
-            if (_products.Length == 0)
+            for (int i = 0; i <= products.Length / _countProductsInPage; i++)
             {
-                TextBlock tblPage = new TextBlock();
-                tblPage.Text = "1";
-                tblPage.FontSize = 30;
-                _tblPages.Add(tblPage);
-            }
-            else
-            {
-                for (int i = 0; i <= _products.Length / _countProductsInPage; i++)
+                List<Product> selectProducts = new List<Product>();
+                for (int j = i * _countProductsInPage; j < i * _countProductsInPage + _countProductsInPage; j++)
                 {
-                    TextBlock tblPage = new TextBlock();
-                    tblPage.Text = (i + 1).ToString();
-                    tblPage.FontSize = 30;
-                    tblPage.Margin = new System.Windows.Thickness(5, 0, 5, 0);
-                    tblPage.Cursor = Cursors.Hand;
-                    tblPage.MouseLeftButtonDown += TblPage_MouseLeftButtonDown;
-                    _tblPages.Add(tblPage);
+                    if (j == products.Length) break;
+                    selectProducts.Add(products[j]);
                 }
+
+                _productPages.Add(i, selectProducts.ToArray());
             }
-
-            _tblPages[_pageNumber].Foreground = Brushes.Red;
-
-            Grid.SetColumn(_spPages, 1);
-            _gridSwitcher.Children.Add(_spPages);
         }
 
-        public void ShowProducts()
+        public TextBlock CreateTblPage(int num)
         {
-            List<Product> products = new List<Product>();
+            TextBlock tblPage = new TextBlock();
+            tblPage.Text = (num + 1).ToString();
+            tblPage.FontSize = 30;
+            tblPage.Margin = new System.Windows.Thickness(5, 0, 5, 0);
+            tblPage.Cursor = Cursors.Hand;
+            tblPage.MouseLeftButtonDown += TblPage_MouseLeftButtonDown;
+            if (num == _pageNumber) tblPage.Foreground = Brushes.Red;
 
-            for (int i = _pageNumber * _countProductsInPage;
-                i < _pageNumber * _countProductsInPage + _countProductsInPage; i++)
-            {
-                if (i == _products.Length) break;
-                products.Add(_products[i]);
-            }
-
-            _lbProducts.ItemsSource = products;
+            return tblPage;
         }
 
         public void ShowPages()
         {
             _spPages.Children.Clear();
 
-            int countPagesInSwitcher = 4;
+            const int countPagesInSwitcher = 4;
 
             if (_pageNumber < countPagesInSwitcher)
             {
                 for (int i = 0; i < countPagesInSwitcher; i++)
                 {
-                    if (i == _tblPages.Count) break;
-                    _spPages.Children.Add(_tblPages[i]);
+                    if (i == _productPages.Count) break;
+                    _spPages.Children.Add(CreateTblPage(i));
                 }
             }
-            else if (_pageNumber >= countPagesInSwitcher && _pageNumber < _tblPages.Count - countPagesInSwitcher)
+            else if (_pageNumber >= countPagesInSwitcher && _pageNumber < _productPages.Count - countPagesInSwitcher)
             {
                 for (int i = _pageNumber; i < _pageNumber + countPagesInSwitcher; i++)
                 {
-                    if (i == _tblPages.Count) break;
-                    _spPages.Children.Add(_tblPages[i]);
+                    if (i == _productPages.Count) break;
+                    _spPages.Children.Add(CreateTblPage(i));
                 }
             }
-            else if (_pageNumber >= _tblPages.Count - countPagesInSwitcher)
+            else if (_pageNumber >= _productPages.Count - countPagesInSwitcher)
             {
-                for (int i = _tblPages.Count - countPagesInSwitcher; i < _tblPages.Count; i++)
+                for (int i = _productPages.Count - countPagesInSwitcher; i < _productPages.Count; i++)
                 {
-                    if (i == _tblPages.Count) break;
-                    _spPages.Children.Add(_tblPages[i]);
+                    if (i == _productPages.Count) break;
+                    _spPages.Children.Add(CreateTblPage(i));
                 }
             }
+
+            _lbProducts.ItemsSource = _productPages[_pageNumber];
         }
 
         private void TblNext_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (_pageNumber < _tblPages.Count - 1)
-            {
-                _tblPages[_pageNumber].Foreground = Brushes.Black;
+            if (_pageNumber < _productPages.Count - 1)
                 _pageNumber++;
-                _tblPages[_pageNumber].Foreground = Brushes.Red;
-            }
 
-            ShowProducts();
             ShowPages();
-
         }
 
         private void TblBack_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (_pageNumber > 0)
-            {
-                _tblPages[_pageNumber].Foreground = Brushes.Black;
                 _pageNumber--;
-                _tblPages[_pageNumber].Foreground = Brushes.Red;
-            }
 
-            ShowProducts();
             ShowPages();
         }
 
         private void TblPage_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             TextBlock tblPage = (TextBlock)sender;
-            for (int i = 0; i < _tblPages.Count; i++)
-            {
-                if (_tblPages[i] == tblPage)
-                {
-                    _tblPages[_pageNumber].Foreground = Brushes.Black;
-                    _pageNumber = i;
-                    _tblPages[_pageNumber].Foreground = Brushes.Red;
+            _pageNumber = int.Parse(tblPage.Text) - 1;
 
-                    ShowProducts();
-                    ShowPages();
-                    break;
-                }
-            }
+            ShowPages();
         }
     }
 }
